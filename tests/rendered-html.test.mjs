@@ -79,4 +79,11 @@ test("exports a GitHub Pages fallback with repository-prefixed links", async () 
   assert.match(pricing, /¥6\.9/);
   assert.match(pricing, /¥99/);
   assert.match(paymentComplete, /刷新会员状态/);
+  assert.match(paymentComplete, /data-payment-sync/);
+  assert.match(paymentComplete, /src="\/paper-sentinel-site\/payment-sync\.js"/);
+
+  const paymentSync = await readFile(new URL("../pages-dist/payment-sync.js", import.meta.url), "utf8");
+  assert.match(paymentSync, /\/v1\/billing\/zpay/);
+  assert.match(paymentSync, /TRADE_SUCCESS/);
+  assert.doesNotMatch(paymentSync, /MERCHANT_KEY|merchantKey|ZPAY_MERCHANT_KEY/);
 });

@@ -25,7 +25,7 @@ for (const route of routes) {
     { waitUntil() {}, passThroughOnException() {} },
   );
   if (!response.ok) throw new Error(`Unable to render ${route}: ${response.status}`);
-  const html = transformHtml(await response.text());
+  const html = transformHtml(await response.text(), route);
   const directory = route === "/" ? output : path.join(output, route.slice(1));
   await mkdir(directory, { recursive: true });
   await writeFile(path.join(directory, "index.html"), html);
@@ -42,8 +42,8 @@ for (const file of await readdir(assetsPath)) {
 await writeFile(path.join(output, ".nojekyll"), "");
 await cp(path.join(output, "index.html"), path.join(output, "404.html"));
 
-function transformHtml(html) {
-  return html
+function transformHtml(html, route) {
+  const transformed = html
     .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "")
     .replace(/<link\b[^>]*rel=["']modulepreload["'][^>]*>/gi, "")
     .replaceAll('href="/assets/', `href="${base}/assets/`)
@@ -57,4 +57,6 @@ function transformHtml(html) {
     .replaceAll('href="/"', `href="${base}/"`)
     .replaceAll(`${publicOrigin}/og.png`, `${publicOrigin}${base}/og.png`)
     .replaceAll("http://localhost:3000/og.png", `${publicOrigin}${base}/og.png`);
+  if (route !== "/payment-complete") return transformed;
+  return transformed.replace("</body>", `<script data-payment-sync src="${base}/payment-sync.js" defer></script></body>`);
 }
