@@ -37,7 +37,7 @@ export default function Home() {
               文献哨兵会核对你的 Excel 阅读记录、本地论文文件夹和可选的 Edge 下载记录，告诉你文献是否已有、是否下载，以及它是第几号。
             </p>
             <div className="hero-actions">
-              <span className="button primary">Edge 商店发布准备中</span>
+              <Link className="button primary" href="/pricing">查看首发方案</Link>
               <Link className="button ghost" href="/privacy">查看隐私承诺 →</Link>
             </div>
             <p className="compatibility">支持中国知网 · Web of Science · XLSX · CSV · RIS · BibTeX</p>
@@ -91,6 +91,17 @@ export default function Home() {
               </article>
             ))}
           </div>
+        </section>
+
+        <section className="section wrap home-pricing">
+          <div>
+            <p className="kicker">首发会员方案</p>
+            <h2>先完整试用，再决定包月或买断</h2>
+            <p>14 天免费体验全部功能。首发用户可选择 31 天会员或永久版，不设置自动扣费。</p>
+          </div>
+          <div className="home-price"><small>31 天会员</small><strong>¥6.9</strong><span>支持 2 台电脑</span></div>
+          <div className="home-price featured-price"><small>永久版</small><strong>¥99</strong><span>支持 3 台电脑</span></div>
+          <Link className="text-link" href="/pricing">查看详细权益 →</Link>
         </section>
 
         <section className="workflow-section">
