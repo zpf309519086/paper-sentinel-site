@@ -12,16 +12,19 @@ const questions = [
   ["如何更新插件？", "从 Edge 商店安装后会自动更新。开发测试版可在 edge://extensions 中点击“重新加载”，然后刷新文献网页。"],
   ["会员会自动续费吗？", "不会。首发的 31 天会员到期后由用户自主续期，也可以一次购买多个月。永久版只需购买一次。"],
   ["永久版包含哪些更新？", "包含现有本地文献核对功能，以及知网、Web of Science 的兼容性和安全更新；未来独立云端服务可能单独收费。"],
+  ["付款后会员没有更新怎么办？", "先回到插件账号页点击“刷新会员状态”。等待一分钟后仍未更新，可在账号页提交“付款与会员”私密工单，并选择对应订单。"],
+  ["怎样修改密码？", "登录插件账号页，展开“修改密码”，输入当前密码和新密码。修改成功后，其他设备上的登录会自动退出。"],
+  ["怎样申请售后或退款？", "付款和账号问题请在插件账号页提交私密售后工单，不要在公开 GitHub Issues 中填写完整订单号或付款资料。退款条件以购买页面展示、支付平台规则和适用法律为准。"],
 ];
 
 export default function SupportPage() {
   return (
     <><Header /><main className="support-page wrap">
-      <div className="support-hero"><p className="kicker">Support</p><h1>使用支持</h1><p>先看常见问题。如果仍未解决，可以通过 GitHub 提交问题。</p><a className="button primary" href="https://github.com/zpf309519086/paper-sentinel-site/issues/new">提交问题</a></div>
+      <div className="support-hero"><p className="kicker">Support</p><h1>使用支持</h1><p>付款与账号问题请在插件账号页提交私密工单；普通功能问题可以通过 GitHub 提交。</p><a className="button primary" href="https://github.com/zpf309519086/paper-sentinel-site/issues/new">提交功能问题</a></div>
       <div className="faq-grid">
         {questions.map(([question, answer]) => <article key={question}><h2>{question}</h2><p>{answer}</p></article>)}
       </div>
-      <div className="support-note"><strong>提交问题前</strong><p>请说明 Edge 版本、文献网站和问题表现。不要上传包含个人文献清单、文件路径或未公开论文的截图。</p></div>
+      <div className="support-note"><strong>提交问题前</strong><p>请说明 Edge 版本、文献网站和问题表现。不要上传密码、完整订单号、付款资料、个人文献清单、文件路径或未公开论文的截图。</p></div>
     </main><Footer /></>
   );
 }

@@ -38,10 +38,11 @@ test("server-renders the 文献哨兵 product page", async () => {
 });
 
 for (const [pathname, title, marker] of [
-  ["/privacy", "隐私政策", "当前版本不会把你的论文正文"],
-  ["/terms", "用户条款", "当前产品仍在购买通道配置阶段"],
+  ["/privacy", "隐私政策", "账号功能与文献处理相互分离"],
+  ["/terms", "用户条款", "账号采用用户名和密码登录"],
   ["/support", "使用支持", "必须使用 Zotero 吗"],
   ["/pricing", "简单、透明，不自动扣费", "31 天会员"],
+  ["/payment-complete", "付款页面已经返回", "刷新会员状态"],
 ]) {
   test(`server-renders ${pathname}`, async () => {
     const response = await render(pathname);
@@ -61,6 +62,7 @@ test("ships the social sharing image and excludes private machine paths", async 
     readFile(new URL("../app/privacy/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/terms/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/support/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/payment-complete/page.tsx", import.meta.url), "utf8"),
   ]);
   const source = files.join("\n");
   assert.doesNotMatch(source, /\/Users\/|Nutstore|张鹏飞|henry/i);
@@ -69,10 +71,12 @@ test("ships the social sharing image and excludes private machine paths", async 
 test("exports a GitHub Pages fallback with repository-prefixed links", async () => {
   const home = await readFile(new URL("../pages-dist/index.html", import.meta.url), "utf8");
   const pricing = await readFile(new URL("../pages-dist/pricing/index.html", import.meta.url), "utf8");
+  const paymentComplete = await readFile(new URL("../pages-dist/payment-complete/index.html", import.meta.url), "utf8");
   assert.match(home, /href="\/paper-sentinel-site\/pricing\//);
   assert.match(home, /href="\/paper-sentinel-site\/assets\//);
   assert.match(home, /https:\/\/zpf309519086\.github\.io\/paper-sentinel-site\/og\.png/);
   assert.doesNotMatch(home, /<script\b/i);
   assert.match(pricing, /¥6\.9/);
   assert.match(pricing, /¥99/);
+  assert.match(paymentComplete, /刷新会员状态/);
 });

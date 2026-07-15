@@ -6,7 +6,7 @@ const root = process.cwd();
 const output = path.join(root, "pages-dist");
 const base = "/paper-sentinel-site";
 const publicOrigin = "https://zpf309519086.github.io";
-const routes = ["/", "/pricing", "/privacy", "/terms", "/support"];
+const routes = ["/", "/pricing", "/privacy", "/terms", "/support", "/payment-complete"];
 
 await rm(output, { recursive: true, force: true });
 await mkdir(output, { recursive: true });
@@ -53,6 +53,7 @@ function transformHtml(html) {
     .replaceAll('href="/privacy"', `href="${base}/privacy/"`)
     .replaceAll('href="/terms"', `href="${base}/terms/"`)
     .replaceAll('href="/support"', `href="${base}/support/"`)
+    .replaceAll('href="/payment-complete"', `href="${base}/payment-complete/"`)
     .replaceAll('href="/"', `href="${base}/"`)
     .replaceAll(`${publicOrigin}/og.png`, `${publicOrigin}${base}/og.png`)
     .replaceAll("http://localhost:3000/og.png", `${publicOrigin}${base}/og.png`);
