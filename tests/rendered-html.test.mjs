@@ -53,6 +53,18 @@ for (const [pathname, title, marker] of [
   });
 }
 
+test("privacy policy discloses the optional download renaming behavior", async () => {
+  const response = await render("/privacy");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /自动重命名新下载的文献/);
+  assert.match(html, /下载自动重命名默认关闭/);
+  assert.match(html, /避免覆盖同名旧文件/);
+  assert.match(html, /Microsoft 的 Edge 同步服务/);
+  assert.match(html, /论文题录、清单内容、文件名、文件路径和下载记录不会写入同步扩展存储/);
+  assert.doesNotMatch(html, /downloads：<\/strong>仅在用户开启相关功能时核对 Edge 下载记录/);
+});
+
 test("ships the social sharing image and excludes private machine paths", async () => {
   const image = await stat(new URL("../public/og.png", import.meta.url));
   assert.ok(image.size > 100_000);
